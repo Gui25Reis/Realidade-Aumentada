@@ -33,7 +33,6 @@ class MainViewController: UIViewController, MainControllerDelegate, ARSCNViewDel
         
         view.setViewDelegate(with: viewDelegate)
         
-        
         guard ARFaceTrackingConfiguration.isSupported else {
             fatalError("Face tracking is not supported on this device.")
         }
@@ -68,7 +67,7 @@ class MainViewController: UIViewController, MainControllerDelegate, ARSCNViewDel
     
     internal func setTextLabel(with text: String) -> Void {
         if let view = self.view as? MainView {
-            view.setText(with: text)
+            // view.setText(with: text)
         }
     }
 }

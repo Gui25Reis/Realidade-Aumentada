@@ -17,28 +17,21 @@ class MainView: UIView {
         return v
     }()
     
-    /// Fundo da área de resultado
-    private let container: UIView = {
-        let v = UIView()
-        
-        v.backgroundColor = .systemBackground
-        v.layer.cornerRadius = 15
-        
-        v.translatesAutoresizingMaskIntoConstraints = false
-        return v
-    }()
     
-    /// Resultado da análise
-    private let label: UILabel = {
-        let v = UILabel()
-        
-        v.textColor = .systemGray3
-        v.textAlignment = .center
+    /// Botão de tutorial
+    private let helpButton = CustomViews.newButton()
     
-        v.translatesAutoresizingMaskIntoConstraints = false
-        return v
-    }()
     
+    /// Contador de fotos tiradas
+    private let photosLabel = CustomViews.newLabel()
+    
+    
+    /// Timer
+    private let timerLabel = CustomViews.newLabel()
+    
+    
+    /// Emojis
+    private var emojisLabels: [UILabel] = []
     
     
     /* MARK: - Construtor */
@@ -47,8 +40,16 @@ class MainView: UIView {
         super.init(frame: .zero)
         
         self.addSubview(self.mainView)
-        self.addSubview(self.container)
-        self.addSubview(self.label)
+        
+        self.addSubview(self.photosLabel)
+        self.addSubview(self.helpButton)
+        
+        self.addSubview(self.timerLabel)
+        
+        for _ in 0..<3 {
+            let lbl = CustomViews.newLabel()
+            self.addSubview(lbl)
+        }
     }
     
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
@@ -57,9 +58,11 @@ class MainView: UIView {
     
     /* MARK: - Encapsulamento */
     
-    /// Define o texto da label
-    public func setText(with text: String) -> Void {
-        self.label.text = text
+    /// Define os emojis na label
+    public func setEmojis(with emojis: [Emojis]) -> Void {
+        for ind in 0..<3 {
+            self.emojisLabels[ind].text = emojis[ind].description
+        }
     }
     
     /// Define o delegate da View AR
@@ -85,7 +88,7 @@ class MainView: UIView {
         super.layoutSubviews()
         
         let space: CGFloat = 25
-        let height: CGFloat = 80
+        let square: CGFloat = 60
                 
         NSLayoutConstraint.activate([
             
@@ -93,22 +96,7 @@ class MainView: UIView {
             self.mainView.topAnchor.constraint(equalTo: self.topAnchor),
             self.mainView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.mainView.leftAnchor.constraint(equalTo: self.leftAnchor),
-            self.mainView.rightAnchor.constraint(equalTo: self.rightAnchor),
-
-            
-            // Container
-            self.container.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -space),
-            self.container.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: space),
-            self.container.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -space),
-            self.container.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            self.container.heightAnchor.constraint(equalToConstant: height),
-            
-            
-            // Label
-            self.label.topAnchor.constraint(equalTo: self.container.topAnchor),
-            self.label.bottomAnchor.constraint(equalTo: self.container.bottomAnchor),
-            self.label.leftAnchor.constraint(equalTo: self.container.leftAnchor),
-            self.label.rightAnchor.constraint(equalTo: self.container.rightAnchor)
+            self.mainView.rightAnchor.constraint(equalTo: self.rightAnchor)
         ])
     }
 }

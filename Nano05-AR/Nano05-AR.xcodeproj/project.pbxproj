@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22046B0728492BAD0074A28F /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22046B0628492BAD0074A28F /* CustomViews.swift */; };
+		22046B0A28492C550074A28F /* Emojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22046B0928492C550074A28F /* Emojis.swift */; };
 		22E626B72847FEFF00C39DFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E626B62847FEFF00C39DFA /* AppDelegate.swift */; };
 		22E626B92847FEFF00C39DFA /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 22E626B82847FEFF00C39DFA /* art.scnassets */; };
 		22E626BB2847FEFF00C39DFA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E626BA2847FEFF00C39DFA /* MainViewController.swift */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22046B0628492BAD0074A28F /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
+		22046B0928492C550074A28F /* Emojis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emojis.swift; sourceTree = "<group>"; };
 		22E626B32847FEFF00C39DFA /* Nano05-AR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nano05-AR.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		22E626B62847FEFF00C39DFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22E626B82847FEFF00C39DFA /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -40,6 +44,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		22046B0828492C3D0074A28F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				22046B0928492C550074A28F /* Emojis.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		22E626AA2847FEFF00C39DFA = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +72,7 @@
 		22E626B52847FEFF00C39DFA /* Nano05-AR */ = {
 			isa = PBXGroup;
 			children = (
+				22046B0828492C3D0074A28F /* Model */,
 				22E626CA2847FFD100C39DFA /* Delegate */,
 				22E626CF2848001800C39DFA /* Protocols */,
 				22E626CC2847FFE200C39DFA /* Controller */,
@@ -91,6 +104,7 @@
 			children = (
 				22E626C12847FF0100C39DFA /* LaunchScreen.storyboard */,
 				22E626CD2847FFFB00C39DFA /* MainView.swift */,
+				22046B0628492BAD0074A28F /* CustomViews.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -190,9 +204,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22046B0A28492C550074A28F /* Emojis.swift in Sources */,
 				22E626BB2847FEFF00C39DFA /* MainViewController.swift in Sources */,
 				22E626CE2847FFFB00C39DFA /* MainView.swift in Sources */,
 				22E626B72847FEFF00C39DFA /* AppDelegate.swift in Sources */,
+				22046B0728492BAD0074A28F /* CustomViews.swift in Sources */,
 				22E626D52848011F00C39DFA /* MainViewControllerDelegate.swift in Sources */,
 				22E626D32848005700C39DFA /* ARMainViewDelegate.swift in Sources */,
 			);
