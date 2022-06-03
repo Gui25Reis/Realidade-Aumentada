@@ -17,6 +17,7 @@
 		22E626CE2847FFFB00C39DFA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E626CD2847FFFB00C39DFA /* MainView.swift */; };
 		22E626D32848005700C39DFA /* ARMainViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E626D22848005700C39DFA /* ARMainViewDelegate.swift */; };
 		22E626D52848011F00C39DFA /* MainViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E626D42848011F00C39DFA /* MainViewControllerDelegate.swift */; };
+		99FA02BE284A84EE00F2A16A /* PhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA02BD284A84EE00F2A16A /* PhotosView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		22E626CD2847FFFB00C39DFA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		22E626D22848005700C39DFA /* ARMainViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARMainViewDelegate.swift; sourceTree = "<group>"; };
 		22E626D42848011F00C39DFA /* MainViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerDelegate.swift; sourceTree = "<group>"; };
+		99FA02BD284A84EE00F2A16A /* PhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				22E626C12847FF0100C39DFA /* LaunchScreen.storyboard */,
 				22E626CD2847FFFB00C39DFA /* MainView.swift */,
 				22046B0628492BAD0074A28F /* CustomViews.swift */,
+				99FA02BD284A84EE00F2A16A /* PhotosView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				22046B0A28492C550074A28F /* Emojis.swift in Sources */,
 				22E626BB2847FEFF00C39DFA /* MainViewController.swift in Sources */,
 				22E626CE2847FFFB00C39DFA /* MainView.swift in Sources */,
+				99FA02BE284A84EE00F2A16A /* PhotosView.swift in Sources */,
 				22E626B72847FEFF00C39DFA /* AppDelegate.swift in Sources */,
 				22046B0728492BAD0074A28F /* CustomViews.swift in Sources */,
 				22E626D52848011F00C39DFA /* MainViewControllerDelegate.swift in Sources */,
