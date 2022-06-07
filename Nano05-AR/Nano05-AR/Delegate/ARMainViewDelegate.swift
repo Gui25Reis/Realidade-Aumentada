@@ -80,7 +80,8 @@ class ARMainViewDelegate: NSObject, ARSCNViewDelegate {
         
         
         // 😛
-        if self.getExpressionValue(with: .tongueOut, for: anchor) > 0.1 {
+        let tongueOut = self.getExpressionValue(with: .tongueOut, for: anchor) > 0.3
+        if tongueOut{
             self.analysis += "linguinha"
         }
         
@@ -89,7 +90,7 @@ class ARMainViewDelegate: NSObject, ARSCNViewDelegate {
         let frownLeft = self.getExpressionValue(with: .mouthFrownLeft, for: anchor) > 0.1
         let frownRight = self.getExpressionValue(with: .mouthFrownRight, for: anchor) > 0.1
 
-        if frownLeft && frownRight {
+        if frownLeft && frownRight && !innerUp {
             self.analysis += "tristinho"
         }
          
@@ -99,15 +100,22 @@ class ARMainViewDelegate: NSObject, ARSCNViewDelegate {
         let smileRight = self.getExpressionValue(with: .mouthSmileRight, for: anchor) > 0.2
         let jawOpen = self.getExpressionValue(with: .jawOpen, for: anchor) > 0.2
 
-        if smileLeft && smileRight && jawOpen {
+        if smileLeft && smileRight && jawOpen && !tongueOut {
             self.analysis += "risadinha"
         }
         
         
-        // 😒
-        let blinkLeft = self.getExpressionValue(with: .eyeBlinkLeft, for: anchor) > 0.3
+        // 😏
+        let lookInLeft = self.getExpressionValue(with: .eyeLookInLeft, for: anchor) > 0.1
+        let lookInRight = self.getExpressionValue(with: .eyeLookInRight, for: anchor) > 0.1
 
-        if blinkLeft && smileLeft && smileRight {
+        if smileRight && lookInLeft && lookInRight {
+            self.analysis += "safadinho"
+        }
+        
+        
+        // 😒
+        if lookInLeft && lookInRight && frownLeft && frownRight {
             self.analysis += "rancorozinho"
         }
         
@@ -122,14 +130,15 @@ class ARMainViewDelegate: NSObject, ARSCNViewDelegate {
         let outerUpLeft = self.getExpressionValue(with: .browOuterUpLeft, for: anchor) > 0.1
         let outerUpRight = self.getExpressionValue(with: .browOuterUpRight, for: anchor) > 0.1
 
-        if outerUpLeft && outerUpRight && frownLeft && frownRight {
+        if outerUpLeft && outerUpRight && frownLeft && frownRight && !innerUp {
             self.analysis += "pensandinho"
         }
         
         
         // ☺️
         let blinkRight = self.getExpressionValue(with: .eyeBlinkRight, for: anchor) > 0.1
-
+        let blinkLeft = self.getExpressionValue(with: .eyeBlinkLeft, for: anchor) > 0.1
+        
         if innerUp && blinkLeft && blinkRight && smileLeft && smileRight {
             self.analysis += "sorrisinho"
         }
@@ -148,19 +157,10 @@ class ARMainViewDelegate: NSObject, ARSCNViewDelegate {
         if innerUp && frownRight && frownLeft {
             self.analysis += "chateadinho"
         }
-        
-        
-        // 😏
-        let lookInLeft = self.getExpressionValue(with: .eyeLookInLeft, for: anchor) > 0.1
-        let lookInRight = self.getExpressionValue(with: .eyeLookInRight, for: anchor) > 0.1
 
-        if smileRight && lookInLeft && lookInRight {
-            self.analysis += "safadinho"
-        }
-        
         
         // 🤢
-        if cheekPuff && innerUp {
+        if cheekPuff && innerUp && !mouthPucker {
             self.analysis += "nojentinho"
         }
     }
