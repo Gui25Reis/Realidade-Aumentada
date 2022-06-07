@@ -1,6 +1,6 @@
 /* Gui Reis & Gabi Namie     -    Created on 02/06/22 */
 
-
+/// Possíveis emojis
 enum Emojis: CustomStringConvertible, CaseIterable {
     case piscadinha
     case linguinha
