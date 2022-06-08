@@ -53,6 +53,16 @@ class PhotoView: UIView {
     
     /* MARK: - Ciclo de Vida */
     
+    public func setEmojisVisualization(to visualization: Bool) -> Void {
+        for label in emojisLabels {
+            label.isHidden = !visualization
+        }
+    }
+    
+    
+    
+    /* MARK: - Ciclo de Vida */
+    
     /// Constraints
     public override func layoutSubviews() -> Void {
         super.layoutSubviews()

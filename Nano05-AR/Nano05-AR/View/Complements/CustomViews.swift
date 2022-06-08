@@ -28,6 +28,9 @@ class CustomViews {
     
         bt.backgroundColor = .secondaryLabel
         bt.tintColor = .systemGray6
+        
+        bt.layer.cornerRadius = 10
+        bt.layer.masksToBounds = true
 
         bt.translatesAutoresizingMaskIntoConstraints = false
         return bt
@@ -41,8 +44,27 @@ class CustomViews {
         if let color = color {
             v.backgroundColor = color
         }
+        
+        v.layer.cornerRadius = 10
+        v.layer.masksToBounds = true
+        v.clipsToBounds = true
 
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
+    }
+    
+    
+    /// Cria uma view com a configuração padrão do sistema
+    static func newImgView(with image: UIImage?) -> UIImageView {
+        let imgView = UIImageView(image: image)
+        
+        imgView.backgroundColor = .secondaryLabel
+        imgView.alpha = 0.7
+        
+        imgView.layer.cornerRadius = 10
+        imgView.layer.masksToBounds = true
+        
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
     }
 }

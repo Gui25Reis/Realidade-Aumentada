@@ -8,9 +8,6 @@ class ResultView: UIView {
     
     /* MARK: - Atributos */
     
-    /// Botão para compartilhar
-    private let shareButton = CustomViews.newButton()
-    
     /// Fotos tiradas
     private var photosView: [PhotoView] = []
     
@@ -24,6 +21,8 @@ class ResultView: UIView {
     init(photosTaken: [PhotoTaken]) {
         super.init(frame: .zero)
         
+        self.backgroundColor = .systemBackground
+        
         // Fotos
         self.addSubview(self.photosContainer)
         
@@ -33,31 +32,31 @@ class ResultView: UIView {
             self.photosView.append(photoView)
             self.addSubview(photoView)
         }
-        
-        // Botões
-        self.addSubview(self.shareButton)
     }
     
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     
     
+    public func setEmojisVisualization(to visualization: Bool) -> Void {
+        for emoji in photosView {
+            emoji.setEmojisVisualization(to: visualization)
+        }
+    }
+    
     /* MARK: - Ciclo de Vida */
     
     public override func layoutSubviews() -> Void {
         super.layoutSubviews()
         
-        let btHeight: CGFloat = 60
-        let safeArea: CGFloat = 50
-        
-        
         NSLayoutConstraint.activate([
-            /* Fotos */
             
+            /* Fotos */
             self.photosContainer.topAnchor.constraint(equalTo: self.topAnchor),
-            self.photosContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            self.photosContainer.leftAnchor.constraint(equalTo: self.leftAnchor),
-            self.photosContainer.rightAnchor.constraint(equalTo: self.rightAnchor),
+            self.photosContainer.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.photosContainer.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            self.photosContainer.heightAnchor.constraint(equalToConstant: self.frame.height),
+            self.photosContainer.widthAnchor.constraint(equalToConstant: self.frame.width),
             
             // Quadrante 1
             self.photosView[1].topAnchor.constraint(equalTo: self.photosContainer.topAnchor),
@@ -81,16 +80,7 @@ class ResultView: UIView {
             self.photosView[3].topAnchor.constraint(equalTo: self.photosContainer.centerYAnchor),
             self.photosView[3].rightAnchor.constraint(equalTo: self.photosContainer.rightAnchor),
             self.photosView[3].bottomAnchor.constraint(equalTo: self.photosContainer.bottomAnchor),
-            self.photosView[3].leftAnchor.constraint(equalTo: self.photosContainer.centerXAnchor),
-            
-            
-            /* Botões */
-            
-            // Compartilhar
-            self.shareButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            self.shareButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -safeArea),
-            self.shareButton.heightAnchor.constraint(equalToConstant: btHeight),
-            self.shareButton.widthAnchor.constraint(equalToConstant: btHeight*2)
+            self.photosView[3].leftAnchor.constraint(equalTo: self.photosContainer.centerXAnchor)
         ])
     }
 }

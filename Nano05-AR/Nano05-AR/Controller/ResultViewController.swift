@@ -10,6 +10,9 @@ class ResultViewController: UIViewController {
     
     /// Emojis selecionados das fotos
     private let photosTaken: [PhotoTaken]
+    
+    ///
+    private var emojiOnPhoto: Bool = true
             
     
     
@@ -38,32 +41,115 @@ class ResultViewController: UIViewController {
     public override func viewDidLoad() -> Void {
         super.viewDidLoad()
         
-        guard let view = self.view as? ResultView else {
-            return
-        }
-    }
-    
-    
-    public override func viewWillAppear(_ animated: Bool) -> Void {
-        super.viewWillAppear(animated)
-    }
-    
-    
-    public override func viewWillDisappear(_ animated: Bool) -> Void {
-        super.viewWillDisappear(animated)
+        self.isModalInPresentation = true
+        self.configureNavBar()
         
-        if let view = self.view as? ResultView {
+        // guard let view = self.view as? ResultView else {return}
+    }
+    
+
+    
+    /* MARK: - Ações do Botão */
+    
+    /// Ação do botão de comparitlha a imagem
+    @objc func shareAction() -> Void {
+        //guard let view = self.view as? ResultView else {return}
+    }
+    
+    
+    /// Ação do botão emoji para remover os emjis da foto
+    @objc func emojiAction() -> UIImage? {
+        self.emojiOnPhoto.toggle()
+        
+        guard let view = self.view as? ResultView else {return UIImage()}
+        
+        view.setEmojisVisualization(to: self.emojiOnPhoto)
+        
+        switch self.emojiOnPhoto {
+        case true:
+            return UIImage(systemName: "face.smiling")
+        case false:
+            return UIImage(named: "EmojiDisabled.png")?.resize(to: CGSize(width: 22, height: 22))
         }
     }
     
-    
-    
-    /* MARK: - Açoes do Botão */
-    
-    @objc func shareAction() -> Void {
-        guard let view = self.view as? ResultView else {return}
+
+    /// Ação do botão de cancelar
+    @objc func cancelAction() -> Void {
+        // Criando alerta
+        let alert = UIAlertController(
+            title: "Cancelar fotos",
+            message: "Tem certeza de que deseja excluir?",
+            preferredStyle: .actionSheet
+        )
+        
+        // Botões do alerta
+        let confirm = UIAlertAction(title: "Sair sem salvar", style: .destructive) { _ in
+            self.dismiss(animated: true)
+        }
+        alert.addAction(confirm)
+        
+        let cancel = UIAlertAction(title: "Voltar", style: .cancel, handler: nil)
+        alert.addAction(cancel)
+        
+        
+        self.present(alert, animated: true)
     }
+    
+    
+    /// Ação do botão de salvar
+    @objc func saveAction() -> Void {
+        self.dismiss(animated: true)
+    }
+    
+    
+    
+    /* MARK: - Configurações */
+        
+    
+    /// Configura a NavBar da classe
+    private func configureNavBar() -> Void {
+        
+        self.navigationController?.navigationBar.backgroundColor = .secondarySystemBackground
+        self.navigationController?.navigationBar.alpha = 0.5
+        
+        // Esquerda
+        let cancelButton = UIBarButtonItem(
+            title: "Cancelar",
+            style: .plain,
+            target: self,
+            action: #selector(self.cancelAction)
+        )
+        
+        self.navigationItem.leftBarButtonItem = cancelButton
+        self.navigationItem.leftBarButtonItem?.tintColor = .systemRed
+        
+        
+        // Direita
+        self.emojiOnPhoto.toggle()
+        self.updateRightBarButton()
+    }
+    
+    
+    @objc private func updateRightBarButton() -> Void {
+        // Direita
+        let emojiImage = self.emojiAction()
+        let emojiButton = UIBarButtonItem(
+            image: emojiImage,
+            landscapeImagePhone: emojiImage,
+            style: .plain,
+            target: self,
+            action: #selector(self.updateRightBarButton)
+        )
+        
+        let saveButton = UIBarButtonItem(
+            title: "Salvar",
+            style: .done,
+            target: self,
+            action: #selector(self.saveAction)
+        )
+        
+        self.navigationItem.rightBarButtonItems = [saveButton, emojiButton]
+    }
+    
 }
-
-
-

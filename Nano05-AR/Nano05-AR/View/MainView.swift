@@ -36,6 +36,9 @@ class MainView: UIView {
     /// Emojis
     private var emojisLabels: [UILabel] = []
     
+    /// View verificadas
+    private var emojisChecked: [UIView] = []
+    
     
     
     /* MARK: - Construtor */
@@ -53,11 +56,19 @@ class MainView: UIView {
         self.addSubview(self.timerLabel)
         
         for _ in 0..<3 {
+            // Label
             let lbl = CustomViews.newLabel()
             lbl.text = Emojis.beijinho.description                  // <- APAGAR
 
             self.emojisLabels.append(lbl)
             self.addSubview(lbl)
+            
+            
+            // Img verificada
+            let image = UIImage(named: "EmojiValidation2.png")
+            let imgView = CustomViews.newImgView(with: image)
+            self.emojisChecked.append(imgView)
+            self.addSubview(imgView)
         }
     }
     
@@ -107,7 +118,7 @@ class MainView: UIView {
     }
     
     
-    /* Outros */
+    /* View */
     
     /// Faz mostra/tira views a partir do estado dela.
     public func setupView(by status: ARStatus) {
@@ -118,15 +129,26 @@ class MainView: UIView {
         switch status {
         case .notStarted:
             visualization = true
+            
+            for label in self.emojisChecked {
+                label.isHidden = visualization
+            }
+            
         case .inProgress:
             visualization = false
+
         case .ended:
             visualization = true
+            
+            for label in self.emojisChecked {
+                label.isHidden = visualization
+            }
         }
         
         for label in self.emojisLabels {
             label.isHidden = visualization
         }
+        
         self.photosLabel.isHidden = visualization
         self.cancelButton.isHidden = visualization
         
@@ -143,7 +165,14 @@ class MainView: UIView {
             self.emojisLabels[ind].text = emojis[ind].description
         }
     }
-        
+    
+    
+    /// Define a validação do emoji
+    public func setEmojiValidation(to validation: Bool, for emoji: Int) -> Void {
+        self.emojisChecked[emoji].isHidden = !validation
+    }
+    
+    
     /// Define o contador de fotos tiradas
     public func setPhotoCount(to count: Int, _ max: Int = 4) -> Void {
         self.photosLabel.text = "\(count)/\(max)"
@@ -199,6 +228,7 @@ class MainView: UIView {
         let space: CGFloat = 25
         let square: CGFloat = 70
         let safeArea: CGFloat = 50
+        let button: CGFloat = 40
         
         
         NSLayoutConstraint.activate([
@@ -228,16 +258,16 @@ class MainView: UIView {
             /* Labels */
             
             // Ajuda
-            self.helpButton.topAnchor.constraint(equalTo: self.topAnchor, constant: safeArea),
+            self.helpButton.centerYAnchor.constraint(equalTo: self.photosLabel.centerYAnchor),
             self.helpButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: space),
-            self.helpButton.heightAnchor.constraint(equalToConstant: 50),
-            self.helpButton.widthAnchor.constraint(equalToConstant: 50),
+            self.helpButton.heightAnchor.constraint(equalToConstant: button),
+            self.helpButton.widthAnchor.constraint(equalToConstant: button),
             
             // Cancelar
-            self.cancelButton.topAnchor.constraint(equalTo: self.topAnchor, constant: safeArea),
+            self.cancelButton.centerYAnchor.constraint(equalTo: self.photosLabel.centerYAnchor),
             self.cancelButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -space),
-            self.cancelButton.heightAnchor.constraint(equalToConstant: 50),
-            self.cancelButton.widthAnchor.constraint(equalToConstant: 50),
+            self.cancelButton.heightAnchor.constraint(equalToConstant: button),
+            self.cancelButton.widthAnchor.constraint(equalToConstant: button),
             
             // Começar
             self.startButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -267,6 +297,29 @@ class MainView: UIView {
             self.emojisLabels[2].heightAnchor.constraint(equalToConstant: square),
             self.emojisLabels[2].widthAnchor.constraint(equalToConstant: square),
             self.emojisLabels[2].leftAnchor.constraint(equalTo: self.emojisLabels[1].rightAnchor, constant: space),
+            
+            
+            /* Emojis Validation*/
+            
+            // Meio
+            self.emojisChecked[1].centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.emojisChecked[1].bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -safeArea),
+            self.emojisChecked[1].heightAnchor.constraint(equalToConstant: square),
+            self.emojisChecked[1].widthAnchor.constraint(equalToConstant: square),
+            
+            // Esquerda
+            self.emojisChecked[0].centerYAnchor.constraint(equalTo: self.emojisChecked[1].centerYAnchor),
+            self.emojisChecked[0].bottomAnchor.constraint(equalTo: self.emojisChecked[1].bottomAnchor),
+            self.emojisChecked[0].heightAnchor.constraint(equalToConstant: square),
+            self.emojisChecked[0].widthAnchor.constraint(equalToConstant: square),
+            self.emojisChecked[0].rightAnchor.constraint(equalTo: self.emojisChecked[1].leftAnchor, constant: -space),
+            
+            // Direita
+            self.emojisChecked[2].centerYAnchor.constraint(equalTo: self.emojisChecked[1].centerYAnchor),
+            self.emojisChecked[2].bottomAnchor.constraint(equalTo: self.emojisChecked[1].bottomAnchor),
+            self.emojisChecked[2].heightAnchor.constraint(equalToConstant: square),
+            self.emojisChecked[2].widthAnchor.constraint(equalToConstant: square),
+            self.emojisChecked[2].leftAnchor.constraint(equalTo: self.emojisChecked[1].rightAnchor, constant: space),
         ])
     }
     

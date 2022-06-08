@@ -118,9 +118,17 @@ class MainViewController: UIViewController, MainControllerDelegate {
         // TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE
         
         
+        // Apresentando nova tela
         let vc = ResultViewController(photosTaken: self.photoTaken)
-        // vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true)
+        vc.modalPresentationStyle = .popover
+        
+        let navBar = UINavigationController(rootViewController: vc)
+        self.present(navBar, animated: true)
+        
+        // Configurando tela de inicio
+        self.statusAR = .notStarted
+        self.photoTaken = []
+        self.setupMenu()
     }
     
     
@@ -169,6 +177,7 @@ class MainViewController: UIViewController, MainControllerDelegate {
         self.timerNumber -= 1
         view.setTimerText(to: self.timerNumber)
         
+        
         if self.timerNumber == 0 {
             self.timer?.invalidate()
             view.setTimerVisibility(to: false)
@@ -196,7 +205,12 @@ class MainViewController: UIViewController, MainControllerDelegate {
     private func starTimer() -> Void {
         guard let view = self.view as? MainView else {return}
         
-        self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerAction), userInfo: nil, repeats: true)
+        self.timer = Timer.scheduledTimer(
+            timeInterval: 1.0,
+            target: self, selector: #selector(self.timerAction),
+            userInfo: nil,
+            repeats: true
+        )
         
         self.timerNumber = 3
         view.setTimerText(to: self.timerNumber)
