@@ -163,6 +163,16 @@ class ARMainViewDelegate: NSObject, ARSCNViewDelegate {
         if cheekPuff && innerUp && !mouthPucker {
             self.analysis += "nojentinho"
         }
+        
+        
+        // Sorrindo
+        let smileLeft = self.getExpressionValue(with: .mouthSmileLeft, for: anchor) > 0.1
+        let smileRight = self.getExpressionValue(with: .mouthSmileRight, for: anchor) > 0.1
+        let moutchOpen = self.getExpressionValue(with: .jawOpen, for: anchor) > 0.1
+
+        if smileLeft && smileRight && moutchOpen {
+            self.analysis += "MUITO FELIZZZZ"
+        }
     }
     
     
