@@ -18,6 +18,7 @@
 		227E013E284F760200A7122A /* UIButton+ButtonConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E013D284F760200A7122A /* UIButton+ButtonConfiguration.swift */; };
 		227E0141284F7CA200A7122A /* ARStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E0140284F7CA200A7122A /* ARStatus.swift */; };
 		227E017C28511C5300A7122A /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E017B28511C5300A7122A /* UIImage+Resize.swift */; };
+		227E017F285130CC00A7122A /* ExpressionAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E017E285130CC00A7122A /* ExpressionAnalysis.swift */; };
 		22E626B72847FEFF00C39DFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E626B62847FEFF00C39DFA /* AppDelegate.swift */; };
 		22E626B92847FEFF00C39DFA /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 22E626B82847FEFF00C39DFA /* art.scnassets */; };
 		22E626BB2847FEFF00C39DFA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E626BA2847FEFF00C39DFA /* MainViewController.swift */; };
@@ -41,7 +42,8 @@
 		227E013D284F760200A7122A /* UIButton+ButtonConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+ButtonConfiguration.swift"; sourceTree = "<group>"; };
 		227E0140284F7CA200A7122A /* ARStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARStatus.swift; sourceTree = "<group>"; };
 		227E017B28511C5300A7122A /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
-		22E626B32847FEFF00C39DFA /* Nano05-AR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nano05-AR.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		227E017E285130CC00A7122A /* ExpressionAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionAnalysis.swift; sourceTree = "<group>"; };
+		22E626B32847FEFF00C39DFA /* emotivAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emotivAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22E626B62847FEFF00C39DFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22E626B82847FEFF00C39DFA /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		22E626BA2847FEFF00C39DFA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +105,14 @@
 			path = UX;
 			sourceTree = "<group>";
 		};
+		227E017D285130A700A7122A /* Complemets */ = {
+			isa = PBXGroup;
+			children = (
+				227E017E285130CC00A7122A /* ExpressionAnalysis.swift */,
+			);
+			path = Complemets;
+			sourceTree = "<group>";
+		};
 		22E626AA2847FEFF00C39DFA = {
 			isa = PBXGroup;
 			children = (
@@ -115,7 +125,7 @@
 		22E626B42847FEFF00C39DFA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				22E626B32847FEFF00C39DFA /* Nano05-AR.app */,
+				22E626B32847FEFF00C39DFA /* emotivAR.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -123,6 +133,7 @@
 		22E626B52847FEFF00C39DFA /* Nano05-AR */ = {
 			isa = PBXGroup;
 			children = (
+				227E017D285130A700A7122A /* Complemets */,
 				227E0137284F713500A7122A /* Extension */,
 				22046B0828492C3D0074A28F /* Model */,
 				22E626CA2847FFD100C39DFA /* Delegate */,
@@ -190,9 +201,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		22E626B22847FEFF00C39DFA /* Nano05-AR */ = {
+		22E626B22847FEFF00C39DFA /* emotivAR */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 22E626C62847FF0100C39DFA /* Build configuration list for PBXNativeTarget "Nano05-AR" */;
+			buildConfigurationList = 22E626C62847FF0100C39DFA /* Build configuration list for PBXNativeTarget "emotivAR" */;
 			buildPhases = (
 				22E626AF2847FEFF00C39DFA /* Sources */,
 				22E626B02847FEFF00C39DFA /* Frameworks */,
@@ -202,9 +213,9 @@
 			);
 			dependencies = (
 			);
-			name = "Nano05-AR";
+			name = emotivAR;
 			productName = "Nano05-AR";
-			productReference = 22E626B32847FEFF00C39DFA /* Nano05-AR.app */;
+			productReference = 22E626B32847FEFF00C39DFA /* emotivAR.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -222,7 +233,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 22E626AE2847FEFF00C39DFA /* Build configuration list for PBXProject "Nano05-AR" */;
+			buildConfigurationList = 22E626AE2847FEFF00C39DFA /* Build configuration list for PBXProject "emotivAR" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -235,7 +246,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				22E626B22847FEFF00C39DFA /* Nano05-AR */,
+				22E626B22847FEFF00C39DFA /* emotivAR */,
 			);
 		};
 /* End PBXProject section */
@@ -261,6 +272,7 @@
 				227E0141284F7CA200A7122A /* ARStatus.swift in Sources */,
 				22046B0A28492C550074A28F /* Emojis.swift in Sources */,
 				227E0139284F714A00A7122A /* UILabel+LabelConfiguration.swift in Sources */,
+				227E017F285130CC00A7122A /* ExpressionAnalysis.swift in Sources */,
 				22E626BB2847FEFF00C39DFA /* MainViewController.swift in Sources */,
 				227E0131284F497400A7122A /* ResultViewController.swift in Sources */,
 				227E013C284F751A00A7122A /* ButtonConfiguration.swift in Sources */,
@@ -413,9 +425,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7Y74F655Y8;
+				DEVELOPMENT_TEAM = 534V229RMK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Confirme para poder salvar a foto no seu dispositivo";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
@@ -428,8 +441,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "GUILHERME.REIS.Nano05-AR";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = emotivAR;
+				PRODUCT_NAME = emotivAR;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -443,9 +456,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7Y74F655Y8;
+				DEVELOPMENT_TEAM = 534V229RMK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Confirme para poder salvar a foto no seu dispositivo";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
@@ -458,8 +472,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "GUILHERME.REIS.Nano05-AR";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = emotivAR;
+				PRODUCT_NAME = emotivAR;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -469,7 +483,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		22E626AE2847FEFF00C39DFA /* Build configuration list for PBXProject "Nano05-AR" */ = {
+		22E626AE2847FEFF00C39DFA /* Build configuration list for PBXProject "emotivAR" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				22E626C42847FF0100C39DFA /* Debug */,
@@ -478,7 +492,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		22E626C62847FF0100C39DFA /* Build configuration list for PBXNativeTarget "Nano05-AR" */ = {
+		22E626C62847FF0100C39DFA /* Build configuration list for PBXNativeTarget "emotivAR" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				22E626C72847FF0100C39DFA /* Debug */,

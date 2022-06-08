@@ -11,16 +11,23 @@ class ResultViewController: UIViewController {
     /// Emojis selecionados das fotos
     private let photosTaken: [PhotoTaken]
     
-    ///
+    /// Verifica se os emojis estão aparecendo na foto ou não
     private var emojiOnPhoto: Bool = true
-            
+    
+    /// Protocolo com a controller
+    private var mainProtocol: MainControllerDelegate
+    
+    /// Caso para quando a foto for salva
+    private var photoSaved: Bool = false
+    
     
     
     /* MARK: - Construtor */
     
-    init(photosTaken: [PhotoTaken]) {
+    init(photosTaken: [PhotoTaken], delegate: MainControllerDelegate) {
         self.photosTaken = photosTaken
-
+        self.mainProtocol = delegate
+        
         super.init(nibName: nil, bundle: nil)
     }
         
@@ -50,33 +57,16 @@ class ResultViewController: UIViewController {
 
     
     /* MARK: - Ações do Botão */
-    
-    /// Ação do botão de comparitlha a imagem
-    @objc func shareAction() -> Void {
-        //guard let view = self.view as? ResultView else {return}
-    }
-    
-    
-    /// Ação do botão emoji para remover os emjis da foto
-    @objc func emojiAction() -> UIImage? {
-        self.emojiOnPhoto.toggle()
-        
-        guard let view = self.view as? ResultView else {return UIImage()}
-        
-        view.setEmojisVisualization(to: self.emojiOnPhoto)
-        
-        switch self.emojiOnPhoto {
-        case true:
-            return UIImage(systemName: "face.smiling")
-        case false:
-            return UIImage(named: "EmojiDisabled.png")?.resize(to: CGSize(width: 22, height: 22))
-        }
-    }
-    
 
     /// Ação do botão de cancelar
     @objc func cancelAction() -> Void {
         // Criando alerta
+        
+        if self.photoSaved {
+            self.closeView()
+            return
+        }
+        
         let alert = UIAlertController(
             title: "Cancelar fotos",
             message: "Tem certeza de que deseja excluir?",
@@ -85,7 +75,7 @@ class ResultViewController: UIViewController {
         
         // Botões do alerta
         let confirm = UIAlertAction(title: "Sair sem salvar", style: .destructive) { _ in
-            self.dismiss(animated: true)
+            self.closeView()
         }
         alert.addAction(confirm)
         
@@ -99,41 +89,24 @@ class ResultViewController: UIViewController {
     
     /// Ação do botão de salvar
     @objc func saveAction() -> Void {
-        self.dismiss(animated: true)
+        guard let view = self.view as? ResultView else {return}
+        
+        let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
+        let image = renderer.image { _ in
+            view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+        }
+        
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        
+        self.photoSaved = true
     }
     
     
-    
-    /* MARK: - Configurações */
-        
-    
-    /// Configura a NavBar da classe
-    private func configureNavBar() -> Void {
-        
-        self.navigationController?.navigationBar.backgroundColor = .secondarySystemBackground
-        self.navigationController?.navigationBar.alpha = 0.5
-        
-        // Esquerda
-        let cancelButton = UIBarButtonItem(
-            title: "Cancelar",
-            style: .plain,
-            target: self,
-            action: #selector(self.cancelAction)
-        )
-        
-        self.navigationItem.leftBarButtonItem = cancelButton
-        self.navigationItem.leftBarButtonItem?.tintColor = .systemRed
-        
-        
-        // Direita
-        self.emojiOnPhoto.toggle()
-        self.updateRightBarButton()
-    }
-    
-    
+    /// Define e atualiza oos botões do lado direito da navigation
     @objc private func updateRightBarButton() -> Void {
         // Direita
-        let emojiImage = self.emojiAction()
+        let emojiImage = self.updateEmojiButton()
+        
         let emojiButton = UIBarButtonItem(
             image: emojiImage,
             landscapeImagePhone: emojiImage,
@@ -152,4 +125,55 @@ class ResultViewController: UIViewController {
         self.navigationItem.rightBarButtonItems = [saveButton, emojiButton]
     }
     
+    
+    
+    /* MARK: - Configurações */
+        
+    
+    /// Configura a NavBar da classe
+    private func configureNavBar() -> Void {
+        
+        self.navigationController?.navigationBar.backgroundColor = .secondarySystemBackground
+        self.navigationController?.navigationBar.alpha = 0.5
+        
+        // Esquerda
+        let cancelButton = UIBarButtonItem(
+            title: "Sair",
+            style: .plain,
+            target: self,
+            action: #selector(self.cancelAction)
+        )
+        
+        self.navigationItem.leftBarButtonItem = cancelButton
+        self.navigationItem.leftBarButtonItem?.tintColor = .systemRed
+        
+        
+        // Direita
+        self.emojiOnPhoto.toggle()
+        self.updateRightBarButton()
+    }
+    
+    
+    /// Atualiza/Cria os botões da navigation
+    private func updateEmojiButton() -> UIImage? {
+        self.emojiOnPhoto.toggle()
+        
+        guard let view = self.view as? ResultView else {return UIImage()}
+        
+        view.setEmojisVisualization(to: self.emojiOnPhoto)
+        
+        switch self.emojiOnPhoto {
+        case true:
+            return UIImage(systemName: "face.smiling")
+        case false:
+            return UIImage(named: "EmojiDisabled.png")?.resize(to: CGSize(width: 22, height: 22))
+        }
+    }
+    
+    
+    /// Fecha a  janela
+    private func closeView() -> Void {
+        self.mainProtocol.updateStatus(to: .notStarted)
+        self.dismiss(animated: true)
+    }
 }

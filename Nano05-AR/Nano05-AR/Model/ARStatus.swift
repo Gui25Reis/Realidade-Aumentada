@@ -9,6 +9,9 @@ enum ARStatus {
     /// Fazendo o reconhecimento
     case inProgress
     
+    /// Tirando a foto
+    case takingPhoto
+    
     /// Finalizou todas as etapas
     case ended
 }
