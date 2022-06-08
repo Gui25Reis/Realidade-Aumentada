@@ -12,32 +12,32 @@ class MainView: UIView {
     /// View de AR principal
     private let mainView: ARSCNView = {
         let v = ARSCNView()
-        
+        v.tag = 10
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
     
-    /// Fundo da área de resultado
-    private let container: UIView = {
-        let v = UIView()
-        
-        v.backgroundColor = .systemBackground
-        v.layer.cornerRadius = 15
-        
-        v.translatesAutoresizingMaskIntoConstraints = false
-        return v
-    }()
     
-    /// Resultado da análise
-    private let label: UILabel = {
-        let v = UILabel()
-        
-        v.textColor = .systemGray3
-        v.textAlignment = .center
+    /// Botão de tutorial
+    private let helpButton = CustomViews.newButton()
     
-        v.translatesAutoresizingMaskIntoConstraints = false
-        return v
-    }()
+    /// Botão para finalizar
+    private let cancelButton = CustomViews.newButton()
+    
+    /// Botão de começar
+    private let startButton = CustomViews.newButton()
+    
+    /// Contador de fotos tiradas
+    private let photosLabel = CustomViews.newLabel()
+    
+    /// Timer
+    private let timerLabel = CustomViews.newLabel()
+    
+    /// Emojis
+    private var emojisLabels: [UILabel] = []
+    
+    /// View verificadas
+    private var emojisChecked: [UIView] = []
     
     
     
@@ -47,8 +47,29 @@ class MainView: UIView {
         super.init(frame: .zero)
         
         self.addSubview(self.mainView)
-        self.addSubview(self.container)
-        self.addSubview(self.label)
+        
+        self.addSubview(self.cancelButton)
+        self.addSubview(self.helpButton)
+        self.addSubview(self.startButton)
+        
+        self.addSubview(self.photosLabel)
+        self.addSubview(self.timerLabel)
+        
+        for _ in 0..<3 {
+            // Label
+            let lbl = CustomViews.newLabel()
+            lbl.text = Emojis.beijinho.description                  // <- APAGAR
+
+            self.emojisLabels.append(lbl)
+            self.addSubview(lbl)
+            
+            
+            // Img verificada
+            let image = UIImage(named: "EmojiValidation2.png")
+            let imgView = CustomViews.newImgView(with: image)
+            self.emojisChecked.append(imgView)
+            self.addSubview(imgView)
+        }
     }
     
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
@@ -57,15 +78,134 @@ class MainView: UIView {
     
     /* MARK: - Encapsulamento */
     
-    /// Define o texto da label
-    public func setText(with text: String) -> Void {
-        self.label.text = text
+    /* Label */
+    
+    /// Define as configurações da label de contador de fotos tiradas
+    public func setupPhotoCountLabel(with configuration: LabelConfiguration) -> Void {
+        self.photosLabel.setupLabel(with: configuration)
     }
+    
+    
+    /// Define as configurações da label do timer
+    public func setupTimerLabel(with configuration: LabelConfiguration) -> Void {
+        self.timerLabel.setupLabel(with: configuration)
+    }
+    
+    
+    /// Define as configurações das labels do emoji
+    public func setupEmojisLabel(with configuration: LabelConfiguration) -> Void {
+        for label in self.emojisLabels {
+            label.setupLabel(with: configuration)
+        }
+    }
+    
+    
+    /* Botão */
+    
+    /// Define a configuração do botão de iniciar
+    public func setupStartButton(with configuration: ButtonConfiguration) -> Void {
+        self.setupButton(for: self.startButton, with: configuration)
+    }
+    
+    /// Define a configuração do botão de ajuda
+    public func setupHelpButton(with configuration: ButtonConfiguration) -> Void {
+        self.setupButton(for: self.helpButton, with: configuration)
+    }
+    
+    /// Define a configuração do botão de cancelar
+    public func setupCancelButton(with configuration: ButtonConfiguration) -> Void {
+        self.setupButton(for: self.cancelButton, with: configuration)
+    }
+    
+    
+    /* View */
+    
+    /// Faz mostra/tira views a partir do estado dela.
+    public func setupView(by status: ARStatus) {
+        self.timerLabel.isHidden = true
+        
+        var visualization: Bool
+        
+        switch status {
+        case .notStarted:
+            visualization = true
+            
+            for label in self.emojisChecked {
+                label.isHidden = visualization
+            }
+            
+        case .inProgress:
+            visualization = false
+
+        case .ended:
+            visualization = true
+            
+            for label in self.emojisChecked {
+                label.isHidden = visualization
+            }
+        }
+        
+        for label in self.emojisLabels {
+            label.isHidden = visualization
+        }
+        
+        self.photosLabel.isHidden = visualization
+        self.cancelButton.isHidden = visualization
+        
+        self.startButton.isHidden = !visualization
+        
+    }
+    
+    
+    /* Outros */
+    
+    /// Define os emojis na label
+    public func setEmojis(with emojis: [Emojis]) -> Void {
+        for ind in 0..<3 {
+            self.emojisLabels[ind].text = emojis[ind].description
+        }
+    }
+    
+    
+    /// Define a validação do emoji
+    public func setEmojiValidation(to validation: Bool, for emoji: Int) -> Void {
+        self.emojisChecked[emoji].isHidden = !validation
+    }
+    
+    
+    /// Define o contador de fotos tiradas
+    public func setPhotoCount(to count: Int, _ max: Int = 4) -> Void {
+        self.photosLabel.text = "\(count)/\(max)"
+    }
+    
+    
+    /// Tira foto da tela
+    public func takeScreenShot() -> UIImage {
+        return self.mainView.snapshot()
+    }
+    
+
+    /* Timer */
+    
+    /// Esconde/Mostra o timer
+    public func setTimerVisibility(to visibility: Bool) -> Void {
+        self.timerLabel.isHidden = !visibility
+    }
+    
+    
+    /// Define o texto que vai na label do timer
+    public func setTimerText(to timer: Int) -> Void {
+        self.timerLabel.text = "\(timer)"
+    }
+    
+    
+    /* AR View */
     
     /// Define o delegate da View AR
     public func setViewDelegate(with delegate: ARSCNViewDelegate) -> Void {
         self.mainView.delegate = delegate
     }
+    
     
     /// Cria o tipo da configuraçào que a View AR vai fazer
     public func runConfiguration(with configuration: ARConfiguration) -> Void {
@@ -81,12 +221,16 @@ class MainView: UIView {
     
     /* MARK: - Ciclo de Vida */
     
+    /// Constraints
     public override func layoutSubviews() -> Void {
         super.layoutSubviews()
         
         let space: CGFloat = 25
-        let height: CGFloat = 80
-                
+        let square: CGFloat = 70
+        let safeArea: CGFloat = 50
+        let button: CGFloat = 40
+        
+        
         NSLayoutConstraint.activate([
             
             // View AR
@@ -94,22 +238,100 @@ class MainView: UIView {
             self.mainView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.mainView.leftAnchor.constraint(equalTo: self.leftAnchor),
             self.mainView.rightAnchor.constraint(equalTo: self.rightAnchor),
-
-            
-            // Container
-            self.container.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -space),
-            self.container.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: space),
-            self.container.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -space),
-            self.container.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            self.container.heightAnchor.constraint(equalToConstant: height),
             
             
-            // Label
-            self.label.topAnchor.constraint(equalTo: self.container.topAnchor),
-            self.label.bottomAnchor.constraint(equalTo: self.container.bottomAnchor),
-            self.label.leftAnchor.constraint(equalTo: self.container.leftAnchor),
-            self.label.rightAnchor.constraint(equalTo: self.container.rightAnchor)
+            /* Labels */
+            
+            // Contador de fotos
+            self.photosLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: safeArea),
+            self.photosLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.photosLabel.heightAnchor.constraint(equalToConstant: 40),
+            self.photosLabel.widthAnchor.constraint(equalToConstant: 60),
+            
+            // Timer
+            self.timerLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            self.timerLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.timerLabel.heightAnchor.constraint(equalToConstant: 120),
+            self.timerLabel.widthAnchor.constraint(equalToConstant: 80),
+            
+            
+            /* Labels */
+            
+            // Ajuda
+            self.helpButton.centerYAnchor.constraint(equalTo: self.photosLabel.centerYAnchor),
+            self.helpButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: space),
+            self.helpButton.heightAnchor.constraint(equalToConstant: button),
+            self.helpButton.widthAnchor.constraint(equalToConstant: button),
+            
+            // Cancelar
+            self.cancelButton.centerYAnchor.constraint(equalTo: self.photosLabel.centerYAnchor),
+            self.cancelButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -space),
+            self.cancelButton.heightAnchor.constraint(equalToConstant: button),
+            self.cancelButton.widthAnchor.constraint(equalToConstant: button),
+            
+            // Começar
+            self.startButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.startButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -safeArea),
+            self.startButton.heightAnchor.constraint(equalToConstant: square),
+            self.startButton.widthAnchor.constraint(equalToConstant: square),
+            
+            
+            /* Emojis */
+            
+            // Meio
+            self.emojisLabels[1].centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.emojisLabels[1].bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -safeArea),
+            self.emojisLabels[1].heightAnchor.constraint(equalToConstant: square),
+            self.emojisLabels[1].widthAnchor.constraint(equalToConstant: square),
+            
+            // Esquerda
+            self.emojisLabels[0].centerYAnchor.constraint(equalTo: self.emojisLabels[1].centerYAnchor),
+            self.emojisLabels[0].bottomAnchor.constraint(equalTo: self.emojisLabels[1].bottomAnchor),
+            self.emojisLabels[0].heightAnchor.constraint(equalToConstant: square),
+            self.emojisLabels[0].widthAnchor.constraint(equalToConstant: square),
+            self.emojisLabels[0].rightAnchor.constraint(equalTo: self.emojisLabels[1].leftAnchor, constant: -space),
+            
+            // Direita
+            self.emojisLabels[2].centerYAnchor.constraint(equalTo: self.emojisLabels[1].centerYAnchor),
+            self.emojisLabels[2].bottomAnchor.constraint(equalTo: self.emojisLabels[1].bottomAnchor),
+            self.emojisLabels[2].heightAnchor.constraint(equalToConstant: square),
+            self.emojisLabels[2].widthAnchor.constraint(equalToConstant: square),
+            self.emojisLabels[2].leftAnchor.constraint(equalTo: self.emojisLabels[1].rightAnchor, constant: space),
+            
+            
+            /* Emojis Validation*/
+            
+            // Meio
+            self.emojisChecked[1].centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.emojisChecked[1].bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -safeArea),
+            self.emojisChecked[1].heightAnchor.constraint(equalToConstant: square),
+            self.emojisChecked[1].widthAnchor.constraint(equalToConstant: square),
+            
+            // Esquerda
+            self.emojisChecked[0].centerYAnchor.constraint(equalTo: self.emojisChecked[1].centerYAnchor),
+            self.emojisChecked[0].bottomAnchor.constraint(equalTo: self.emojisChecked[1].bottomAnchor),
+            self.emojisChecked[0].heightAnchor.constraint(equalToConstant: square),
+            self.emojisChecked[0].widthAnchor.constraint(equalToConstant: square),
+            self.emojisChecked[0].rightAnchor.constraint(equalTo: self.emojisChecked[1].leftAnchor, constant: -space),
+            
+            // Direita
+            self.emojisChecked[2].centerYAnchor.constraint(equalTo: self.emojisChecked[1].centerYAnchor),
+            self.emojisChecked[2].bottomAnchor.constraint(equalTo: self.emojisChecked[1].bottomAnchor),
+            self.emojisChecked[2].heightAnchor.constraint(equalToConstant: square),
+            self.emojisChecked[2].widthAnchor.constraint(equalToConstant: square),
+            self.emojisChecked[2].leftAnchor.constraint(equalTo: self.emojisChecked[1].rightAnchor, constant: space),
         ])
+    }
+    
+    
+    
+    /* MARK: - Outros */
+    
+    
+    /// Faz a configuração do botão
+    private func setupButton(for button: UIButton, with configuration: ButtonConfiguration) -> Void {
+        button.setupButton(with: configuration)
+        button.addTarget(configuration.target, action: configuration.action, for: .touchDown)
     }
 }
 
