@@ -11,20 +11,29 @@ class MainViewController: UIViewController, MainControllerDelegate {
     /// Delegate da view AR
     private let viewDelegate = ARMainViewDelegate()
     
-    /// Capturas de tela e  emojis
+    /// Capturas de tela feitas e seus emojis
     private var photoTaken: [PhotoTaken] = []
     
-    /// Timer
+    /// Timer para tirar a foto
     private var timer: Timer?
     
     /// Valor do timer
     private var timerNumber: Int = 3
     
-    /// Status
+    /// Status de analize do Face Tracking
     private var statusAR: ARStatus = .notStarted
     
+    /// Emojis (3) selecionados para fazer as emoções
+    static var emojisSelected: [Emojis] = []
+    
+    /// Todos os emojis disponíveis para serem escolhidos randomicamente (em grupos de 3)
+    private var allEmojis: [Emojis] = []
+    
+    /// Emojis que foram avaliados corretamente
+    private var emojisRecognized: [Emojis] = []
     
     
+
     /* MARK: - Ciclo de Vida */
     
     public override func loadView() -> Void {
@@ -42,7 +51,7 @@ class MainViewController: UIViewController, MainControllerDelegate {
         
         // Delegate
         self.viewDelegate.setProtocol(with: self)
-        
+
         view.setViewDelegate(with: viewDelegate)
         
         
@@ -59,12 +68,6 @@ class MainViewController: UIViewController, MainControllerDelegate {
         self.setupLabels()
         self.setupButtons()
         self.setupMenu()
-        
-        // TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE
-        self.starTimer()
-        
-        view.setEmojis(with: [.chateadinho, .enjoadinho, .beijinho])
-        // TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE
     }
     
     
@@ -94,10 +97,47 @@ class MainViewController: UIViewController, MainControllerDelegate {
     
     /* MARK: - Protocol */
     
-    internal func setTextLabel(with text: String) -> Void {
-        if let _ = self.view as? MainView {
-            // view.setText(with: text)
-        }
+    
+    /// Inicia a contagem regressiva pra tirar foto
+    internal func startTimer() -> Void {
+        guard let view = self.view as? MainView else {return}
+        self.statusAR = .takingPhoto
+        
+        self.timer = Timer.scheduledTimer(
+            timeInterval: 0.6,
+            target: self, selector: #selector(self.timerAction),
+            userInfo: nil,
+            repeats: true
+        )
+        
+        self.timerNumber = 3
+        view.setTimerText(to: self.timerNumber)
+        view.setTimerVisibility(to: true)
+        
+        view.setTipsLabelVisibility(to: false)
+    }
+    
+
+    /// Pega o estado atual do processo
+    internal func getStatus() -> ARStatus {
+        return self.statusAR
+    }
+    
+    
+    /// Adiciona os emojis que foram reconhecidos
+    internal func addEmojiRecognized(with emoji: Emojis) -> Void {
+        self.emojisRecognized.append(emoji)
+        
+        guard let view = self.view as? MainView else {return}
+        view.setEmojiValidation(to: true, for: emoji)
+    }
+    
+    
+    /// Atualiza o estado do processo E configura as variáveis e view
+    internal func updateStatus(to status: ARStatus) -> Void {
+        self.statusAR = status
+        self.configureVariable()
+        self.setupMenu()
     }
     
     
@@ -106,29 +146,7 @@ class MainViewController: UIViewController, MainControllerDelegate {
     
     /// Ação do botão de ajuda
     @objc func helpAction() -> Void {
-        guard let view = self.view as? MainView else {return}
-        
-        
-        // TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE
-        for _ in 0..<4 {
-            let photo = PhotoTaken(image: view.takeScreenShot(), emojis: [Emojis.enjoadinho, Emojis.chateadinho])
-            
-            self.photoTaken.append(photo)
-        }
-        // TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE
-        
-        
-        // Apresentando nova tela
-        let vc = ResultViewController(photosTaken: self.photoTaken)
-        vc.modalPresentationStyle = .popover
-        
-        let navBar = UINavigationController(rootViewController: vc)
-        self.present(navBar, animated: true)
-        
-        // Configurando tela de inicio
-        self.statusAR = .notStarted
-        self.photoTaken = []
-        self.setupMenu()
+        // guard let view = self.view as? MainView else {return}
     }
     
     
@@ -165,8 +183,12 @@ class MainViewController: UIViewController, MainControllerDelegate {
         guard let view = self.view as? MainView else {return}
         
         self.statusAR = .inProgress
+        self.configureVariable()
         
         view.setupView(by: self.statusAR)
+        
+        // Configuração para inicio de jogo
+        view.setEmojis(with: MainViewController.emojisSelected)
     }
     
     
@@ -174,16 +196,17 @@ class MainViewController: UIViewController, MainControllerDelegate {
     @objc func timerAction() -> Void {
         guard let view = self.view as? MainView else {return}
         
+        // Contagem regressiva
         self.timerNumber -= 1
         view.setTimerText(to: self.timerNumber)
         
-        
+        // Finalizado
         if self.timerNumber == 0 {
             self.timer?.invalidate()
-            view.setTimerVisibility(to: false)
+            self.takeScreenShot()
         }
     }
-    
+
     
     /// Lida com o caso de dispositivos que não tem suporte para ARKit
     private func deviceNotSupportedHandler() -> Void {
@@ -191,32 +214,88 @@ class MainViewController: UIViewController, MainControllerDelegate {
     }
     
     
+    
     /* MARK: - Configurações */
     
     /// Tira a foto
     private func takeScreenShot() -> Void {
         guard let view = self.view as? MainView else {return}
+        view.setTimerVisibility(to: false)
         
-        let _ = view.takeScreenShot()
+        let image = view.takeScreenShot()
+        
+        // Salva a foto com os emojis
+        let photoTaken = PhotoTaken(image: image, emojis: self.emojisRecognized)
+        
+        self.photoTaken.append(photoTaken)
+        
+        // Att o contador de fotos
+        view.setPhotoCount(to: self.photoTaken.count)
+        
+        
+        // Tirou todas as fotos
+        if self.photoTaken.count == 4 {
+            self.statusAR = .ended
+            self.configureVariable()
+            
+            // Apresentando nova tela
+            let vc = ResultViewController(photosTaken: self.photoTaken, delegate: self)
+            vc.modalPresentationStyle = .popover
+            
+            let navBar = UINavigationController(rootViewController: vc)
+            self.present(navBar, animated: true)
+            return
+        }
+        
+        // Att os novos emojis
+        self.getRandomEmojis()
+        view.setEmojis(with: MainViewController.emojisSelected)
+        view.setTipsLabelVisibility(to: true)
+        
+        self.statusAR = .inProgress
+    }
+    
+
+    /// Pega 3 emojis aleatórios
+    private func getRandomEmojis() -> Void {
+        self.emojisRecognized = []
+        MainViewController.emojisSelected = []
+        
+        if self.allEmojis.count >= 3 {
+            
+            // Loop Unrolling
+            MainViewController.emojisSelected.append( self.allEmojis.remove(at: 0) )
+            MainViewController.emojisSelected.append( self.allEmojis.remove(at: 0) )
+            MainViewController.emojisSelected.append( self.allEmojis.remove(at: 0) )
+        }
     }
     
     
-    /// Começa um timer
-    private func starTimer() -> Void {
-        guard let view = self.view as? MainView else {return}
+    /// Configura as variáveis da classe de acordo com o momento do jogo
+    private func configureVariable() -> Void {
+        switch self.statusAR {
+        case .notStarted:
+            self.photoTaken = []
+            MainViewController.emojisSelected = []
+            self.allEmojis = []
+            self.setupMenu()
+            
+        case .inProgress:
+            self.timerNumber = 3
+            
+            self.allEmojis = Emojis.allCases.shuffled()
+            self.getRandomEmojis()
         
-        self.timer = Timer.scheduledTimer(
-            timeInterval: 1.0,
-            target: self, selector: #selector(self.timerAction),
-            userInfo: nil,
-            repeats: true
-        )
-        
-        self.timerNumber = 3
-        view.setTimerText(to: self.timerNumber)
-        view.setTimerVisibility(to: true)
-        
-        self.statusAR = .inProgress
+        case .takingPhoto:
+            break
+            
+        case .ended:
+            self.statusAR = .notStarted
+            self.timerNumber = 3
+            
+            guard let view = self.view as? MainView else {return}
+            view.setPhotoCount(to: 0)
+        }
     }
     
     
@@ -236,6 +315,8 @@ class MainViewController: UIViewController, MainControllerDelegate {
         guard let view = self.view as? MainView else {return}
         
         view.setupPhotoCountLabel(with: LabelConfiguration(initialText: "0/4", size: 20, weight: .bold))
+        
+        view.setupTipsLabel(with: LabelConfiguration(initialText: "Imite um dos emojis", size: 20, weight: .medium))
         
         view.setupEmojisLabel(with: LabelConfiguration(initialText: "", size: 60, weight: .black))
         
@@ -261,7 +342,7 @@ class MainViewController: UIViewController, MainControllerDelegate {
         
         view.setupStartButton(with:
             ButtonConfiguration(
-                icon: "info.circle", size: 25, weight: .bold, scale: .medium,
+                icon: "play.fill", size: 30, weight: .bold, scale: .medium,
                 target: self, action: #selector(self.startAction))
         )
     }

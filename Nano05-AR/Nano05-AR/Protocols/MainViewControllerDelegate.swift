@@ -3,5 +3,9 @@
 
 /// Protocolo para comunicação da View Controller com o delegate do ARKit
 protocol MainControllerDelegate: AnyObject {
-    func setTextLabel(with text: String) -> Void
+    func startTimer() -> Void
+    func getStatus() -> ARStatus
+    func addEmojiRecognized(with emoji: Emojis) -> Void
+    
+    func updateStatus(to status: ARStatus) -> Void
 }

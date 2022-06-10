@@ -10,7 +10,7 @@ class MainView: UIView {
     /* MARK: - Atributos */
     
     /// View de AR principal
-    private let mainView: ARSCNView = {
+     let mainView: ARSCNView = {
         let v = ARSCNView()
         v.tag = 10
         v.translatesAutoresizingMaskIntoConstraints = false
@@ -33,6 +33,9 @@ class MainView: UIView {
     /// Timer
     private let timerLabel = CustomViews.newLabel()
     
+    /// Texto para explicar o que precisa ser feito
+    private let tipsLabel = CustomViews.newLabel()
+    
     /// Emojis
     private var emojisLabels: [UILabel] = []
     
@@ -54,22 +57,24 @@ class MainView: UIView {
         
         self.addSubview(self.photosLabel)
         self.addSubview(self.timerLabel)
+        self.addSubview(self.tipsLabel)
         
         for _ in 0..<3 {
             // Label
             let lbl = CustomViews.newLabel()
-            lbl.text = Emojis.beijinho.description                  // <- APAGAR
-
+        
             self.emojisLabels.append(lbl)
             self.addSubview(lbl)
             
             
             // Img verificada
-            let image = UIImage(named: "EmojiValidation2.png")
+            let image = UIImage(named: "EmojiValidation.png")
             let imgView = CustomViews.newImgView(with: image)
             self.emojisChecked.append(imgView)
             self.addSubview(imgView)
         }
+        
+        self.helpButton.isHidden = true
     }
     
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
@@ -89,6 +94,12 @@ class MainView: UIView {
     /// Define as configurações da label do timer
     public func setupTimerLabel(with configuration: LabelConfiguration) -> Void {
         self.timerLabel.setupLabel(with: configuration)
+    }
+    
+    
+    /// Define as configurações da label de dicas
+    public func setupTipsLabel(with configuration: LabelConfiguration) -> Void {
+        self.tipsLabel.setupLabel(with: configuration)
     }
     
     
@@ -133,16 +144,19 @@ class MainView: UIView {
             for label in self.emojisChecked {
                 label.isHidden = visualization
             }
+            self.setTipsLabelVisibility(to: false)
             
-        case .inProgress:
+        case .inProgress, .takingPhoto:
             visualization = false
-
+            self.setTipsLabelVisibility(to: true)
+        
         case .ended:
             visualization = true
             
             for label in self.emojisChecked {
                 label.isHidden = visualization
             }
+            self.setTipsLabelVisibility(to: false)
         }
         
         for label in self.emojisLabels {
@@ -161,15 +175,19 @@ class MainView: UIView {
     
     /// Define os emojis na label
     public func setEmojis(with emojis: [Emojis]) -> Void {
-        for ind in 0..<3 {
+        for ind in 0..<emojis.count {
             self.emojisLabels[ind].text = emojis[ind].description
         }
     }
     
     
-    /// Define a validação do emoji
-    public func setEmojiValidation(to validation: Bool, for emoji: Int) -> Void {
-        self.emojisChecked[emoji].isHidden = !validation
+    /// Define se um emoji
+    public func setEmojiValidation(to validation: Bool, for emoji: Emojis) -> Void {
+        for index in 0..<emojisLabels.count {
+            if MainViewController.emojisSelected[index] == emoji {
+                self.emojisChecked[index].isHidden = !validation
+            }
+        }
     }
     
     
@@ -181,7 +199,16 @@ class MainView: UIView {
     
     /// Tira foto da tela
     public func takeScreenShot() -> UIImage {
+        for emojis in emojisChecked {
+            emojis.isHidden = true
+        }
         return self.mainView.snapshot()
+    }
+    
+    
+    /// Define a visibilidade da label de dicas
+    public func setTipsLabelVisibility(to visibility: Bool) -> Void {
+        self.tipsLabel.isHidden = !visibility
     }
     
 
@@ -202,8 +229,8 @@ class MainView: UIView {
     /* AR View */
     
     /// Define o delegate da View AR
-    public func setViewDelegate(with delegate: ARSCNViewDelegate) -> Void {
-        self.mainView.delegate = delegate
+    public func setViewDelegate(with delegate: ARSessionDelegate) -> Void {
+        self.mainView.session.delegate = delegate
     }
     
     
@@ -254,8 +281,14 @@ class MainView: UIView {
             self.timerLabel.heightAnchor.constraint(equalToConstant: 120),
             self.timerLabel.widthAnchor.constraint(equalToConstant: 80),
             
+            // Dicas
+            self.tipsLabel.centerXAnchor.constraint(equalTo: self.emojisLabels[1].centerXAnchor),
+            self.tipsLabel.bottomAnchor.constraint(equalTo: self.emojisLabels[1].topAnchor, constant: -space),
+            self.tipsLabel.heightAnchor.constraint(equalToConstant: 40),
+            self.tipsLabel.widthAnchor.constraint(equalToConstant: square*3 + space*2),
             
-            /* Labels */
+            
+            /* Botões */
             
             // Ajuda
             self.helpButton.centerYAnchor.constraint(equalTo: self.photosLabel.centerYAnchor),
@@ -299,7 +332,7 @@ class MainView: UIView {
             self.emojisLabels[2].leftAnchor.constraint(equalTo: self.emojisLabels[1].rightAnchor, constant: space),
             
             
-            /* Emojis Validation*/
+            /* Emojis validados */
             
             // Meio
             self.emojisChecked[1].centerXAnchor.constraint(equalTo: self.centerXAnchor),
