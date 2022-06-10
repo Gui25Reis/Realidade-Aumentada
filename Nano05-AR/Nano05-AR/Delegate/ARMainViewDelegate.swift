@@ -8,21 +8,21 @@
 import ARKit
 
 
-class ARMainViewDelegate: NSObject, ARSCNViewDelegate {
+class ARMainViewDelegate: NSObject, ARSessionDelegate {
     
     /* MARK: - Atributos*/
-    
-    /// Analise da expressão
-    private var analysis = ""
     
     /// Protocolo de comunicação com a View Controller
     private var mainControllerDelegate: MainControllerDelegate?
     
     
+    private let analysis = ExpressionAnalysis()
+    
+    
     
     /* MARK: - Encapsulamento */
     
-    /// Define o protocolo com a  view controller
+    /// Define o protocolo com a view controller
     public func setProtocol(with delegate: MainControllerDelegate) {
         self.mainControllerDelegate = delegate
     }
@@ -31,68 +31,20 @@ class ARMainViewDelegate: NSObject, ARSCNViewDelegate {
     
     /* MARK: - Delegate */
     
-    /// Primeiro contato
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        if let device = renderer.device {
-            let faceMeshGeometry = ARSCNFaceGeometry(device: device)
-            let node = SCNNode(geometry: faceMeshGeometry)
-            node.geometry?.firstMaterial?.fillMode = .lines
+    func session(_ session: ARSession, didUpdate anchors: [ARAnchor]) {
+        if self.mainControllerDelegate?.getStatus() != .takingPhoto {
+            var validation: Emojis? = nil
             
-            return node
-        } else {
-            fatalError("No device found")
-        }
-    }
-    
-    
-    /// O que acontece quando tem uma atualização na câmera
-    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-        if
-            let faceAnchor = anchor as? ARFaceAnchor,
-            let faceGeometry = node.geometry as? ARSCNFaceGeometry {
-            faceGeometry.update(from: faceAnchor.geometry)
+            for anchor in anchors {
+                validation = self.analysis.getExpressionAnalysis(with: anchor)
+                if let validation = validation {
+                    self.mainControllerDelegate?.addEmojiRecognized(with: validation)
+                }
+            }
             
-            self.expressionAnalysis(with: faceAnchor)
-            
-            DispatchQueue.main.async {
-                self.mainControllerDelegate?.setTextLabel(with: self.analysis)
+            if validation != nil {
+                self.mainControllerDelegate?.startTimer()
             }
         }
     }
-    
-    
-    /* MARK: - Outros */
-    
-    /// Analisa uma determinada expressão
-    private func expressionAnalysis(with anchor: ARFaceAnchor) {
-        self.analysis = ""
-    
-        if self.getExpressionValue(with: .cheekPuff, for: anchor) > 0.1 {
-            self.analysis += "You're cheeks are puffed!"
-        }
-        
-        if self.getExpressionValue(with: .tongueOut, for: anchor) > 0.1 {
-            self.analysis += "Don't stick your tonge out!"
-        }
-        
-        // Bravo
-        let eyeLeft = self.getExpressionValue(with: .browDownLeft, for: anchor) > 0.2
-        let eyeRight = self.getExpressionValue(with: .browDownRight, for: anchor) > 0.2
-
-        if eyeLeft && eyeRight {
-            self.analysis += "Bravooo"
-        }
-    }
-    
-    
-    /// Pega o valor de uma determinada expressão
-    private func getExpressionValue(with expression: ARFaceAnchor.BlendShapeLocation, for anchor: ARFaceAnchor) -> Decimal {
-        let expression = anchor.blendShapes[expression]
-        
-        if let value = expression?.decimalValue {
-            return value
-        }
-        return -1
-    }
-    
 }

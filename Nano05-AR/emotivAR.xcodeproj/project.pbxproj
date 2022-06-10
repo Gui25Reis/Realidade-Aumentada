@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22046B0728492BAD0074A28F /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22046B0628492BAD0074A28F /* CustomViews.swift */; };
+		22046B0A28492C550074A28F /* Emojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22046B0928492C550074A28F /* Emojis.swift */; };
+		227E012F284E963E00A7122A /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E012E284E963E00A7122A /* PhotoView.swift */; };
+		227E0131284F497400A7122A /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E0130284F497400A7122A /* ResultViewController.swift */; };
+		227E0133284F67B300A7122A /* PhotoTaken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E0132284F67B300A7122A /* PhotoTaken.swift */; };
+		227E0136284F703700A7122A /* LabelConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E0135284F703700A7122A /* LabelConfiguration.swift */; };
+		227E0139284F714A00A7122A /* UILabel+LabelConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E0138284F714A00A7122A /* UILabel+LabelConfiguration.swift */; };
+		227E013C284F751A00A7122A /* ButtonConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E013B284F751A00A7122A /* ButtonConfiguration.swift */; };
+		227E013E284F760200A7122A /* UIButton+ButtonConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E013D284F760200A7122A /* UIButton+ButtonConfiguration.swift */; };
+		227E0141284F7CA200A7122A /* ARStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E0140284F7CA200A7122A /* ARStatus.swift */; };
+		227E017C28511C5300A7122A /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E017B28511C5300A7122A /* UIImage+Resize.swift */; };
+		227E017F285130CC00A7122A /* ExpressionAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E017E285130CC00A7122A /* ExpressionAnalysis.swift */; };
 		22E626B72847FEFF00C39DFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E626B62847FEFF00C39DFA /* AppDelegate.swift */; };
 		22E626B92847FEFF00C39DFA /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 22E626B82847FEFF00C39DFA /* art.scnassets */; };
 		22E626BB2847FEFF00C39DFA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E626BA2847FEFF00C39DFA /* MainViewController.swift */; };
@@ -15,10 +27,23 @@
 		22E626CE2847FFFB00C39DFA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E626CD2847FFFB00C39DFA /* MainView.swift */; };
 		22E626D32848005700C39DFA /* ARMainViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E626D22848005700C39DFA /* ARMainViewDelegate.swift */; };
 		22E626D52848011F00C39DFA /* MainViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E626D42848011F00C39DFA /* MainViewControllerDelegate.swift */; };
+		99FA02BE284A84EE00F2A16A /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA02BD284A84EE00F2A16A /* ResultView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		22E626B32847FEFF00C39DFA /* Nano05-AR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nano05-AR.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		22046B0628492BAD0074A28F /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
+		22046B0928492C550074A28F /* Emojis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emojis.swift; sourceTree = "<group>"; };
+		227E012E284E963E00A7122A /* PhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
+		227E0130284F497400A7122A /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		227E0132284F67B300A7122A /* PhotoTaken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTaken.swift; sourceTree = "<group>"; };
+		227E0135284F703700A7122A /* LabelConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelConfiguration.swift; sourceTree = "<group>"; };
+		227E0138284F714A00A7122A /* UILabel+LabelConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+LabelConfiguration.swift"; sourceTree = "<group>"; };
+		227E013B284F751A00A7122A /* ButtonConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonConfiguration.swift; sourceTree = "<group>"; };
+		227E013D284F760200A7122A /* UIButton+ButtonConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+ButtonConfiguration.swift"; sourceTree = "<group>"; };
+		227E0140284F7CA200A7122A /* ARStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARStatus.swift; sourceTree = "<group>"; };
+		227E017B28511C5300A7122A /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
+		227E017E285130CC00A7122A /* ExpressionAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionAnalysis.swift; sourceTree = "<group>"; };
+		22E626B32847FEFF00C39DFA /* emotivAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emotivAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22E626B62847FEFF00C39DFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22E626B82847FEFF00C39DFA /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		22E626BA2847FEFF00C39DFA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -27,6 +52,7 @@
 		22E626CD2847FFFB00C39DFA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		22E626D22848005700C39DFA /* ARMainViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARMainViewDelegate.swift; sourceTree = "<group>"; };
 		22E626D42848011F00C39DFA /* MainViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerDelegate.swift; sourceTree = "<group>"; };
+		99FA02BD284A84EE00F2A16A /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +66,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		22046B0828492C3D0074A28F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				227E013F284F7C3600A7122A /* UX */,
+				22046B0928492C550074A28F /* Emojis.swift */,
+				227E0132284F67B300A7122A /* PhotoTaken.swift */,
+				227E0140284F7CA200A7122A /* ARStatus.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		227E012D284E962800A7122A /* Complements */ = {
+			isa = PBXGroup;
+			children = (
+				22046B0628492BAD0074A28F /* CustomViews.swift */,
+				227E012E284E963E00A7122A /* PhotoView.swift */,
+			);
+			path = Complements;
+			sourceTree = "<group>";
+		};
+		227E0137284F713500A7122A /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				227E0138284F714A00A7122A /* UILabel+LabelConfiguration.swift */,
+				227E013D284F760200A7122A /* UIButton+ButtonConfiguration.swift */,
+				227E017B28511C5300A7122A /* UIImage+Resize.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		227E013F284F7C3600A7122A /* UX */ = {
+			isa = PBXGroup;
+			children = (
+				227E0135284F703700A7122A /* LabelConfiguration.swift */,
+				227E013B284F751A00A7122A /* ButtonConfiguration.swift */,
+			);
+			path = UX;
+			sourceTree = "<group>";
+		};
+		227E017D285130A700A7122A /* Complemets */ = {
+			isa = PBXGroup;
+			children = (
+				227E017E285130CC00A7122A /* ExpressionAnalysis.swift */,
+			);
+			path = Complemets;
+			sourceTree = "<group>";
+		};
 		22E626AA2847FEFF00C39DFA = {
 			isa = PBXGroup;
 			children = (
@@ -52,7 +125,7 @@
 		22E626B42847FEFF00C39DFA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				22E626B32847FEFF00C39DFA /* Nano05-AR.app */,
+				22E626B32847FEFF00C39DFA /* emotivAR.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,6 +133,9 @@
 		22E626B52847FEFF00C39DFA /* Nano05-AR */ = {
 			isa = PBXGroup;
 			children = (
+				227E017D285130A700A7122A /* Complemets */,
+				227E0137284F713500A7122A /* Extension */,
+				22046B0828492C3D0074A28F /* Model */,
 				22E626CA2847FFD100C39DFA /* Delegate */,
 				22E626CF2848001800C39DFA /* Protocols */,
 				22E626CC2847FFE200C39DFA /* Controller */,
@@ -90,7 +166,9 @@
 			isa = PBXGroup;
 			children = (
 				22E626C12847FF0100C39DFA /* LaunchScreen.storyboard */,
+				227E012D284E962800A7122A /* Complements */,
 				22E626CD2847FFFB00C39DFA /* MainView.swift */,
+				99FA02BD284A84EE00F2A16A /* ResultView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -99,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				22E626BA2847FEFF00C39DFA /* MainViewController.swift */,
+				227E0130284F497400A7122A /* ResultViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -122,9 +201,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		22E626B22847FEFF00C39DFA /* Nano05-AR */ = {
+		22E626B22847FEFF00C39DFA /* emotivAR */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 22E626C62847FF0100C39DFA /* Build configuration list for PBXNativeTarget "Nano05-AR" */;
+			buildConfigurationList = 22E626C62847FF0100C39DFA /* Build configuration list for PBXNativeTarget "emotivAR" */;
 			buildPhases = (
 				22E626AF2847FEFF00C39DFA /* Sources */,
 				22E626B02847FEFF00C39DFA /* Frameworks */,
@@ -134,9 +213,9 @@
 			);
 			dependencies = (
 			);
-			name = "Nano05-AR";
+			name = emotivAR;
 			productName = "Nano05-AR";
-			productReference = 22E626B32847FEFF00C39DFA /* Nano05-AR.app */;
+			productReference = 22E626B32847FEFF00C39DFA /* emotivAR.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -154,7 +233,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 22E626AE2847FEFF00C39DFA /* Build configuration list for PBXProject "Nano05-AR" */;
+			buildConfigurationList = 22E626AE2847FEFF00C39DFA /* Build configuration list for PBXProject "emotivAR" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -167,7 +246,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				22E626B22847FEFF00C39DFA /* Nano05-AR */,
+				22E626B22847FEFF00C39DFA /* emotivAR */,
 			);
 		};
 /* End PBXProject section */
@@ -190,11 +269,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				227E0141284F7CA200A7122A /* ARStatus.swift in Sources */,
+				22046B0A28492C550074A28F /* Emojis.swift in Sources */,
+				227E0139284F714A00A7122A /* UILabel+LabelConfiguration.swift in Sources */,
+				227E017F285130CC00A7122A /* ExpressionAnalysis.swift in Sources */,
 				22E626BB2847FEFF00C39DFA /* MainViewController.swift in Sources */,
+				227E0131284F497400A7122A /* ResultViewController.swift in Sources */,
+				227E013C284F751A00A7122A /* ButtonConfiguration.swift in Sources */,
 				22E626CE2847FFFB00C39DFA /* MainView.swift in Sources */,
+				227E0133284F67B300A7122A /* PhotoTaken.swift in Sources */,
+				227E012F284E963E00A7122A /* PhotoView.swift in Sources */,
+				99FA02BE284A84EE00F2A16A /* ResultView.swift in Sources */,
 				22E626B72847FEFF00C39DFA /* AppDelegate.swift in Sources */,
+				22046B0728492BAD0074A28F /* CustomViews.swift in Sources */,
 				22E626D52848011F00C39DFA /* MainViewControllerDelegate.swift in Sources */,
 				22E626D32848005700C39DFA /* ARMainViewDelegate.swift in Sources */,
+				227E017C28511C5300A7122A /* UIImage+Resize.swift in Sources */,
+				227E0136284F703700A7122A /* LabelConfiguration.swift in Sources */,
+				227E013E284F760200A7122A /* UIButton+ButtonConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +428,7 @@
 				DEVELOPMENT_TEAM = 534V229RMK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Confirme para poder salvar a foto no seu dispositivo";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
@@ -348,8 +441,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "GUILHERME.REIS.Nano05-AR";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = emotivAR;
+				PRODUCT_NAME = emotivAR;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -366,6 +459,7 @@
 				DEVELOPMENT_TEAM = 534V229RMK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Confirme para poder salvar a foto no seu dispositivo";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
@@ -378,8 +472,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "GUILHERME.REIS.Nano05-AR";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = emotivAR;
+				PRODUCT_NAME = emotivAR;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -389,7 +483,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		22E626AE2847FEFF00C39DFA /* Build configuration list for PBXProject "Nano05-AR" */ = {
+		22E626AE2847FEFF00C39DFA /* Build configuration list for PBXProject "emotivAR" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				22E626C42847FF0100C39DFA /* Debug */,
@@ -398,7 +492,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		22E626C62847FF0100C39DFA /* Build configuration list for PBXNativeTarget "Nano05-AR" */ = {
+		22E626C62847FF0100C39DFA /* Build configuration list for PBXNativeTarget "emotivAR" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				22E626C72847FF0100C39DFA /* Debug */,
