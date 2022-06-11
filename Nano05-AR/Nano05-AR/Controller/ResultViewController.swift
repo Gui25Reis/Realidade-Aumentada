@@ -48,10 +48,10 @@ class ResultViewController: UIViewController {
     public override func viewDidLoad() -> Void {
         super.viewDidLoad()
         
+        // Bloqueia fechar modal por toque
         self.isModalInPresentation = true
-        self.configureNavBar()
         
-        // guard let view = self.view as? ResultView else {return}
+        self.configureNavBar()
     }
     
 
@@ -60,45 +60,82 @@ class ResultViewController: UIViewController {
 
     /// Ação do botão de cancelar
     @objc func cancelAction() -> Void {
-        // Criando alerta
-        
         if self.photoSaved {
             self.closeView()
             return
         }
         
-        let alert = UIAlertController(
+        // Criando alerta
+        let alertInfo = AlarmSettings(
             title: "Cancelar fotos",
-            message: "Tem certeza de que deseja excluir?",
-            preferredStyle: .actionSheet
+            description: "Tem certeza de que deseja excluir?",
+            cancelText: "Voltar",
+            style: .alert
         )
+        
+        let alert: UIAlertController = self.crateAlert(with: alertInfo)
         
         // Botões do alerta
         let confirm = UIAlertAction(title: "Sair sem salvar", style: .destructive) { _ in
             self.closeView()
         }
         alert.addAction(confirm)
-        
-        let cancel = UIAlertAction(title: "Voltar", style: .cancel, handler: nil)
-        alert.addAction(cancel)
-        
-        
+            
         self.present(alert, animated: true)
     }
     
     
     /// Ação do botão de salvar
     @objc func saveAction() -> Void {
+        // Cria a imagem
         guard let view = self.view as? ResultView else {return}
         
         let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
-        let image = renderer.image { _ in
+        let imagesCaptured = renderer.image { _ in
             view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
         }
         
+        // Cria o alerta
+        let alertInfo = AlarmSettings(
+            title: nil,
+            description: nil,
+            cancelText: "Voltar",
+            style: .actionSheet
+        )
+        
+        let alert = self.crateAlert(with: alertInfo)
+        
+        // Botões do alerta
+        let saveAndLeave = UIAlertAction(title: "Salvar e sair", style: .default) { _ in
+            self.saveAndLeaveAction(image: imagesCaptured)
+        }
+        alert.addAction(saveAndLeave)
+        
+        
+        let share = UIAlertAction(title: "Compartilhar", style: .default) { _ in
+            self.shareAction(image: imagesCaptured)
+        }
+        
+        alert.addAction(share)
+        self.present(alert, animated: true)
+    }
+    
+    
+    /// Salva a imagem no dispositivo e fecha a view
+    private func saveAndLeaveAction(image: UIImage) -> Void {
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         
         self.photoSaved = true
+        self.closeView()
+    }
+    
+    
+    /// Abre a área de compartilhamento
+    private func shareAction(image: UIImage) -> Void {
+        let vc = UIActivityViewController(activityItems: [image], applicationActivities: [])
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem     // Ipad
+        
+        self.present(vc, animated: true)
     }
     
     
@@ -175,5 +212,20 @@ class ResultViewController: UIViewController {
     private func closeView() -> Void {
         self.mainProtocol.updateStatus(to: .notStarted)
         self.dismiss(animated: true)
+    }
+    
+    
+    /// Cria um alerta já com o botão de cancelar
+    private func crateAlert(with settings: AlarmSettings) -> UIAlertController {
+        let alert = UIAlertController(
+            title: settings.title,
+            message: settings.description,
+            preferredStyle: settings.style
+        )
+
+        let cancel = UIAlertAction(title: settings.cancelText, style: .cancel, handler: nil)
+        alert.addAction(cancel)
+        
+        return alert
     }
 }
