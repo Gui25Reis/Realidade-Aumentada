@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		22046B0728492BAD0074A28F /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22046B0628492BAD0074A28F /* CustomViews.swift */; };
 		22046B0A28492C550074A28F /* Emojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22046B0928492C550074A28F /* Emojis.swift */; };
+		2257F8BA285260430097208D /* AlarmSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2257F8B9285260430097208D /* AlarmSettings.swift */; };
 		227E012F284E963E00A7122A /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E012E284E963E00A7122A /* PhotoView.swift */; };
 		227E0131284F497400A7122A /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E0130284F497400A7122A /* ResultViewController.swift */; };
 		227E0133284F67B300A7122A /* PhotoTaken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E0132284F67B300A7122A /* PhotoTaken.swift */; };
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		22046B0628492BAD0074A28F /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
 		22046B0928492C550074A28F /* Emojis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emojis.swift; sourceTree = "<group>"; };
+		2257F8B9285260430097208D /* AlarmSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettings.swift; sourceTree = "<group>"; };
 		227E012E284E963E00A7122A /* PhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
 		227E0130284F497400A7122A /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		227E0132284F67B300A7122A /* PhotoTaken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTaken.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				22046B0928492C550074A28F /* Emojis.swift */,
 				227E0132284F67B300A7122A /* PhotoTaken.swift */,
 				227E0140284F7CA200A7122A /* ARStatus.swift */,
+				2257F8B9285260430097208D /* AlarmSettings.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				99FA02BE284A84EE00F2A16A /* ResultView.swift in Sources */,
 				22E626B72847FEFF00C39DFA /* AppDelegate.swift in Sources */,
 				22046B0728492BAD0074A28F /* CustomViews.swift in Sources */,
+				2257F8BA285260430097208D /* AlarmSettings.swift in Sources */,
 				22E626D52848011F00C39DFA /* MainViewControllerDelegate.swift in Sources */,
 				22E626D32848005700C39DFA /* ARMainViewDelegate.swift in Sources */,
 				227E017C28511C5300A7122A /* UIImage+Resize.swift in Sources */,
@@ -424,7 +428,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 534V229RMK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
@@ -455,7 +459,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 534V229RMK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
