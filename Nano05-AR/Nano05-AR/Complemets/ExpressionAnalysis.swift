@@ -9,98 +9,75 @@ import ARKit
 
 class ExpressionAnalysis {
     
-    /* MARK: - Atributos */
-    
-    /// Analise da expressão
-    private var analysis = ""
-    
-    
-    
     /* MARK: - Métodos */
     
     
     /// Compara se a expressão é o emoji em si
     private func compareExpression(to emoji: Emojis, with anchor: ARFaceAnchor) -> Bool {
-        
         let innerUp = self.getExpressionValue(with: .browInnerUp, for: anchor) > 0.1
         let cheekPuff = self.getExpressionValue(with: .cheekPuff, for: anchor) > 0.1
         
-        // 😗
-        let mouthPucker = self.getExpressionValue(with: .mouthPucker, for: anchor) > 0.3
-        
-
-        // 😛
-        let tongueOut = self.getExpressionValue(with: .tongueOut, for: anchor) > 0.3
-
-        // ☹️
         let frownLeft = self.getExpressionValue(with: .mouthFrownLeft, for: anchor) > 0.1
         let frownRight = self.getExpressionValue(with: .mouthFrownRight, for: anchor) > 0.1
-
-         
-        // 😃
-        let smileLeft = self.getExpressionValue(with: .mouthSmileLeft, for: anchor) > 0.2
-        let smileRight = self.getExpressionValue(with: .mouthSmileRight, for: anchor) > 0.2
-        let jawOpen = self.getExpressionValue(with: .jawOpen, for: anchor) > 0.2
-
         
-        // 😏
-        let lookInLeft = self.getExpressionValue(with: .eyeLookInLeft, for: anchor) > 0.1
-        let lookInRight = self.getExpressionValue(with: .eyeLookInRight, for: anchor) > 0.1
+        let tongueOut = self.getExpressionValue(with: .tongueOut, for: anchor) > 0.2
+        
+        let eyeLeft = self.getExpressionValue(with: .browDownLeft, for: anchor) > 0.4
+        let eyeRight = self.getExpressionValue(with: .browDownRight, for: anchor) > 0.4
+        let eyeSquinLeft = self.getExpressionValue(with: .eyeSquintLeft, for: anchor) > 0.1
+        let eyeSquinRight = self.getExpressionValue(with: .eyeSquintRight, for: anchor) > 0.1
+        let brownLeft = self.getExpressionValue(with: .browOuterUpRight, for: anchor) > 0.1
+        let lookDownLeft = self.getExpressionValue(with: .eyeLookDownLeft, for: anchor) > 0.4
+        let lookDownRight = self.getExpressionValue(with: .eyeLookDownRight, for: anchor) > 0.4
+        
+        let smileLeft = self.getExpressionValue(with: .mouthSmileLeft, for: anchor) > 0.4
+        let smileRight = self.getExpressionValue(with: .mouthSmileRight, for: anchor) > 0.4
+        let mouthClose = self.getExpressionValue(with: .mouthClose, for: anchor) > 0.1
+        let jawOpen = self.getExpressionValue(with: .jawOpen, for: anchor) > 0.1
+        
+        let blinkRight = self.getExpressionValue(with: .eyeBlinkRight, for: anchor) > 0.2
+        let blinkLeft = self.getExpressionValue(with: .eyeBlinkLeft, for: anchor) > 0.2
+        
+        let mouthPucker = self.getExpressionValue(with: .mouthPucker, for: anchor) > 0.4
+        let mouthPucker2 = self.getExpressionValue(with: .mouthPucker, for: anchor) < 0.7
+        
+        let smileLeft2 = self.getExpressionValue(with: .mouthSmileLeft, for: anchor)
         
         
-        // 😒
-        if lookInLeft && lookInRight && frownLeft && frownRight {
-            self.analysis += "rancorozinho"
-        }
+        //let tongueOut2 = self.getExpressionValue(with: .tongueOut, for: anchor) < 0.3
         
-        
-        // 😮   🤔
-        let outerUpLeft = self.getExpressionValue(with: .browOuterUpLeft, for: anchor) > 0.1
-        let outerUpRight = self.getExpressionValue(with: .browOuterUpRight, for: anchor) > 0.1
-
-        if outerUpLeft && outerUpRight && frownLeft && frownRight && !innerUp {
-            self.analysis += "pensandinho"
-        }
-        
-        // ☺️
-        let blinkRight = self.getExpressionValue(with: .eyeBlinkRight, for: anchor) > 0.1
-        let blinkLeft = self.getExpressionValue(with: .eyeBlinkLeft, for: anchor) > 0.1
-                
-        // 🙄
-        let lookUpLeft = self.getExpressionValue(with: .eyeLookUpLeft, for: anchor) > 0.1
-        let lookUpRight = self.getExpressionValue(with: .eyeLookUpRight, for: anchor) > 0.1
-
-        // 🥺   🤢
-                
         switch emoji {
-        case .piscadinha:
-            return false
+        case .dormindinho:
+            return eyeSquinLeft && eyeSquinRight && mouthClose
         case .linguinha:
             return tongueOut
         case .beijinho:
-            return mouthPucker && !innerUp
-        case .tristinho:
-            return frownLeft && frownRight && !innerUp
+            return mouthPucker && !jawOpen && !cheekPuff
+        case .baguncadinho:
+            return mouthClose && brownLeft && !jawOpen && !tongueOut
         case .contentizinho:
             return smileLeft && smileRight && jawOpen && !tongueOut
         case .surpresinho:
-            return self.getExpressionValue(with: .jawOpen, for: anchor) > 0.5
+            return !tongueOut && !smileLeft && !smileRight && !(eyeLeft && eyeRight) &&
+            self.getExpressionValue(with: .jawOpen, for: anchor) > 0.5
         case .boiolinha:
-            return innerUp && blinkLeft && blinkRight && smileLeft && smileRight
+            return innerUp && blinkLeft && blinkRight && smileLeft && smileRight && !jawOpen && !(eyeLeft && eyeRight)
         case .dozinha:
-            return false
-        case .tediozinho:
-            return innerUp && lookUpLeft && lookUpRight
+            return innerUp && frownRight && frownLeft && !jawOpen && mouthPucker2 && !(eyeLeft && eyeRight)
+        case .segredinho:
+            return lookDownLeft && lookDownRight && mouthClose
         case .safadinho:
-            return smileRight && lookInLeft && lookInRight
-        case .chateadinho:
-            return innerUp && frownRight && frownLeft
-        case .enjoadinho:
+            return !smileRight && smileLeft2 > 0.24 && smileLeft2 < 4 && !jawOpen
+        case .diabinho:
+            return eyeLeft && eyeRight && !tongueOut &&
+            (innerUp && blinkLeft && blinkRight && smileLeft && smileRight && !jawOpen)
+        case .bravinho:
             return cheekPuff && innerUp && !mouthPucker
         }
         
         
     }
+    
     
     /// Analisa uma determinada expressão
     public func getExpressionAnalysis(with anchor: ARAnchor) -> Emojis? {

@@ -104,7 +104,7 @@ class MainViewController: UIViewController, MainControllerDelegate {
         self.statusAR = .takingPhoto
         
         self.timer = Timer.scheduledTimer(
-            timeInterval: 0.6,
+            timeInterval: 0.5,
             target: self, selector: #selector(self.timerAction),
             userInfo: nil,
             repeats: true
@@ -279,6 +279,8 @@ class MainViewController: UIViewController, MainControllerDelegate {
             MainViewController.emojisSelected = []
             self.allEmojis = []
             self.setupMenu()
+            guard let view = self.view as? MainView else {return}
+            view.setPhotoCount(to: 0)
             
         case .inProgress:
             self.timerNumber = 3

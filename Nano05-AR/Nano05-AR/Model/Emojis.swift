@@ -2,33 +2,33 @@
 
 /// Possíveis emojis
 enum Emojis: CustomStringConvertible, CaseIterable {
-    case piscadinha
+    case dormindinho
     case linguinha
     case beijinho
-    case tristinho
+    case baguncadinho
     case contentizinho
     case surpresinho
     case boiolinha
     case dozinha
-    case tediozinho
+    case segredinho
     case safadinho
-    case chateadinho
-    case enjoadinho
+    case diabinho
+    case bravinho
 
     var description: String {
         switch self {
-        case .piscadinha: return "😉"
+        case .dormindinho: return "😑"
         case .linguinha: return "😛"
         case .beijinho: return "😙"
-        case .tristinho: return "☹️"
+        case .baguncadinho: return "🤨"
         case .contentizinho: return "😃"
         case .surpresinho: return "😮"
         case .boiolinha: return "☺️"
         case .dozinha: return "🥺"
-        case .tediozinho: return "🙄"
+        case .segredinho: return "🤫"
         case .safadinho: return "😏"
-        case .chateadinho: return "🫤"
-        case .enjoadinho: return "🤢"
+        case .diabinho: return "😈"
+        case .bravinho: return "😠"
         }
     }
 }
